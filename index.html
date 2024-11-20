@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Bargain Boutique</title>
+    <link rel="icon" type="image/png" href="path/to/favicon.png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/21145fcb91.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="announcement" align="center"></div>
+    <header class="header">
+        <nav class="navbar">
+            <div class="company">
+                <img src="image/slide0.avif" alt="Bargain Boutique">
+                <h1>Bargain Boutique</h1>
+            </div>
+            <div class="navdiv">
+                <ul class="nav_links">
+                    <li><button class="nav-link" onclick="showSection('home')">Home</button></li>
+                    <li><button class="nav-link" onclick="showSection('shop')">Shop</button></li>
+                    <li><button class="nav-link" onclick="showSection('about')">About</button></li>
+                </ul>                
+            </div>
+            <div class="register">
+                <form id="search-bar" action="javascript:void(0);" method="get">
+                    <button id="search" type="button" onclick="toggleSearchInput()">
+                        <i id="search-logo" class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                    <input type="text" name="query" placeholder="Search..." required id="search-input" onkeypress="if(event.key === 'Enter') filterProducts()">
+                    <div id="no-match-message">No matches found
+                        <div class="box-arrow"></div>
+                    </div>
+                </form>
+                <button class="basket-icon" id="basket" onclick="showSection('container-basket')">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span id="cart-counter" class="cart-counter">0</span> </button>
+                    <button id="userProfile" class="userProfile" style="background-color: transparent; border: none; font-size: 2rem;"><i class="fa-solid fa-user"></i></button>     
+            </div>
+        </nav>
+    </header>
+
+    <!-- Home Section -->
+    <section id="home" class="section active">
+                    <img id="slide1" src="image/over-the-horizon1_1944x.webp" alt="Thrift Store Background">
+        
+        <div class="text" >
+            <h2>THE BEST IS YET TO COME</h2>
+            <h3>Turning the page to open a brand new chapter. </h3>
+        </div>
+        <div class="video-wrapper">
+            <iframe id="youtube-video" 
+                    src="https://www.youtube.com/embed/nJMtMNOUUyQ?autoplay=1&mute=1&controls=0&modestbranding=1&rel=0" 
+                    title="YouTube video player" frameborder="0" 
+                    allow="autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+            </iframe>
+            <button id="mute-unmute-btn" onclick="toggleMute()">
+                <i id="mute-icon" class="fa-solid fa-volume-xmark"></i>
+            </button>
+        </div>        
+        </div>
+    </section>
+
+
+    <!-- About Section-->
+     <section id="about" class="section">
+        <div class="about-container">
+            <img src="image/store.jpg" alt="Store Image">
+            <br><br><br>
+            <h1>About Us</h1>
+            <p>Welcome to Bargain Boutique! We offer stylish and affordable clothing and accessories, helping you express your unique style without breaking the bank. Discover your next favorite look with us today!</p>
+            <br><br><br><br><br><br><br><br><br><br>
+            <hr>
+            <h1>Company Background</h1>
+            <p>Bargain Boutique was founded to offer high-quality, budget-friendly products that resonate with modern consumers. Initially a physical retail store, the company faced challenges in market reach and competition from online platforms. To address these issues, Bargain Boutique is developing an e-commerce website to expand its customer base, enhance the shopping experience, and remain competitive in the digital marketplace.
+
+            </p>
+        </div> 
+
+     </section>
+<!---Shop Section ------>
+     <section id="shop" class="section">
+        <div class="container">
+            <div id="filter" class="filter">
+                <ul>
+                    <li class="active" onclick="filterByCategory('all')">All Products</li>
+                    <li onclick="filterByCategory('women-clothing')">Women Clothing</li>
+                    <li onclick="filterByCategory('men-clothing')">Men Clothing</li>
+                    <li onclick="filterByCategory('kids')">Kids</li>
+                    <li onclick="filterByCategory('shoes')">Shoes</li>
+                    <li onclick="filterByCategory('bags')">Bags & Luggages</li>
+                    <li onclick="filterByCategory('jewelry')" style="font-size:15px">Jewelry & Accessories</li>
+                    <li onclick="filterByCategory('toys')">Stuffed Toys</li>
+                </ul>                     
+            </div>
+            <div class="shop-container">
+                <div class="product-list" data-category="men-clothing">
+                    <figure>
+                        <div class="folder">
+                            <img src="image/1.jpg" alt="T-shirt" class="img1">
+                            <img src="image/2.jpg" alt="T-shirt" class="img2">
+                        </div>
+                        <figcaption>
+                            <div class="text-container">
+                                <h2 class="description">Regular Fit T-shirt</h2>
+                                <h3 class="price">₱320.00</h3>
+                            </div>
+                            <button class="fa-solid fa-cart-shopping add-to-cart">Add</button>
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="product-list" data-category="men-clothing">
+                    <figure>
+                        <div class="folder">
+                            <img src="image/3.jpg" alt="T-shirt" class="img1">
+                            <img src="image/3.jpg" alt="T-shirt" class="img2">
+                        </div>
+                        <figcaption>
+                            <div class="text-container">
+                                <h2 class="description">Graphic Tee</h2>
+                                <h3 class="price">₱325.00</h3>
+                            </div>
+                            <button class="fa-solid fa-cart-shopping add-to-cart">Add</button>
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="product-list" data-category="men-clothing">
+                    <figure>
+                        <div class="folder">
+                            <img src="image/4.jpg" alt="T-shirt" class="img1">
+                            <img src="image/5.jpg" alt="T-shirt" class="img2">
+                        </div>
+                        <figcaption>
+                            <div class="text-container">
+                                <h2 class="description">Nirvana T-shirt</h2>
+                                <h3 class="price">₱300.00</h3>
+                            </div>
+                            <button class="fa-solid fa-cart-shopping add-to-cart">Add</button>
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="product-list" data-category="men-clothing">
+                    <figure>
+                        <div class="folder">
+                            <img src="image/6.jpg" alt="T-shirt" class="img1">
+                            <img src="image/6.jpg" alt="T-shirt" class="img2">
+                        </div>
+                        <figcaption>
+                            <div class="text-container">
+                                <h2 class="description">Jaws T-shirt</h2>
+                                <h3 class="price">₱250.00</h3>
+                            </div>
+                            <button class="fa-solid fa-cart-shopping add-to-cart">Add</button>
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="product-list" data-category="men-clothing">
+                    <figure>
+                        <div class="folder">
+                            <img src="image/9.jpg" alt="T-shirt" class="img1">
+                            <img src="image/9.1.jpg" alt="T-shirt" class="img2">
+                        </div>
+                        <figcaption>
+                            <div class="text-container">
+                                <h2 class="description">Regular T-shirt</h2>
+                                <h3 class="price">₱225.00</h3>
+                            </div>
+                            <button class="fa-solid fa-cart-shopping add-to-cart">Add</button>
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="product-list" data-category="men-clothing">
+                    <figure>
+                        <div class="folder">
+                            <img src="image/10.2.webp" alt="T-shirt" class="img1">
+                            <img src="image/10.jpg" alt="T-shirt" class="img2">
+                        </div>
+                        <figcaption>
+                            <div class="text-container">
+                                <h2 class="description">White Hoody</h2>
+                                <h3 class="price">₱625.00</h3>
+                            </div>
+                            <button class="fa-solid fa-cart-shopping add-to-cart">Add</button>
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="product-list" data-category="men-clothing">
+                    <figure>
+                        <div class="folder">
+                            <img src="image/11.1.webp" alt="T-shirt" class="img1">
+                            <img src="image/11.jpg" alt="T-shirt" class="img2">
+                        </div>
+                        <figcaption>
+                            <div class="text-container">
+                                <h2 class="description">Graphic Tee</h2>
+                                <h3 class="price">$25.00</h3>
+                            </div>
+                            <button class="fa-solid fa-cart-shopping add-to-cart">Add</button>
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="product-list" data-category="men-clothing">
+                    <figure>
+                        <div class="folder">
+                            <img src="image/12.1.webp" alt="T-shirt" class="img1">
+                            <img src="image/12.jpg" alt="T-shirt" class="img2">
+                        </div>
+                        <figcaption>
+                            <div class="text-container">
+                                <h2 class="description">Regular Grey T-shirt</h2>
+                                <h3 class="price">₱275.00</h3>
+                            </div>
+                            <button class="fa-solid fa-cart-shopping add-to-cart">Add</button>
+                        </figcaption>
+                    </figure>
+                </div>
+                <!----Women CLothing--->
+                <div class="product-list" data-category="women-clothing">
+                    <figure>
+                        <div class="folder">
+                            <img src="image/w1.avif" alt="T-shirt" class="img1">
+                            <img src="image/w1.1.avif" alt="T-shirt" class="img2">
+                        </div>
+                        <figcaption>
+                            <div class="text-container">
+                                <h2 class="description">Long-sleeved Microfiber Top</h2>
+                                <h3 class="price">₱25.00</h3>
+                            </div>
+                            <button class="fa-solid fa-cart-shopping add-to-cart">Add</button>
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="product-list" data-category="women-clothing">
+                    <figure>
+                        <div class="folder">
+                            <img src="image/w2.2.avif" alt="T-shirt" class="img1">
+                            <img src="image/w2.avif" alt="T-shirt" class="img2">
+                        </div>
+                        <figcaption>
+                            <div class="text-container">
+                                <h2 class="description">Fine-Knit Turtleneck Top</h2>
+                                <h3 class="price">₱25.00</h3>
+                            </div>
+                            <button class="fa-solid fa-cart-shopping add-to-cart">Add</button>
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="product-list" data-category="women-clothing">
+                    <figure>
+                        <div class="folder">
+                            <img src="image/w3.avif" alt="T-shirt" class="img1">
+                            <img src="image/w3.3.avif" alt="T-shirt" class="img2">
+                        </div>
+                        <figcaption>
+                            <div class="text-container">
+                                <h2 class="description">Fine-Knit Turtleneck Top</h2>
+                                <h3 class="price">₱25.00</h3>
+                            </div>
+                            <button class="fa-solid fa-cart-shopping add-to-cart">Add</button>
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="product-list" data-category="women-clothing">
+                    <figure>
+                        <div class="folder">
+                            <img src="image/w4.avif" alt="T-shirt" class="img1">
+                            <img src="image/w4.4.avif" alt="T-shirt" class="img2">
+                        </div>
+                        <figcaption>
+                            <div class="text-container">
+                                <h2 class="description">Oversized T-shirt</h2>
+                                <h3 class="price">₱25.00</h3>
+                            </div>
+                            <button class="fa-solid fa-cart-shopping add-to-cart">Add</button>
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="product-list" data-category="women-clothing">
+                    <figure>
+                        <div class="folder">
+                            <img src="image/w5.avif" alt="T-shirt" class="img1">
+                            <img src="image/w5.5.avif" alt="T-shirt" class="img2">
+                        </div>
+                        <figcaption>
+                            <div class="text-container">
+                                <h2 class="description">Rhinestone-Detail Satin Tank Top</h2>
+                                <h3 class="price">₱25.00</h3>
+                            </div>
+                            <button class="fa-solid fa-cart-shopping add-to-cart">Add</button>
+                        </figcaption>
+                    </figure>
+                </div>
+                <div class="product-list" data-category="women-clothing">
+                    <figure>
+                        <div class="folder">
+                            <img src="image/w6.avif" alt="T-shirt" class="img1">
+                            <img src="image/w6.6.avif" alt="T-shirt" class="img2">s
+                        </div>
+                        <figcaption>
+                            <div class="text-container">
+                                <h2 class="description">Graphic Tee</h2>
+                                <h3 class="price">$25.00</h3>
+                            </div>
+                            <button class="fa-solid fa-cart-shopping add-to-cart">Add</button>
+                        </figcaption>
+                    </figure>
+                </div>
+            <!------KIDS clothing ----->  
+            <div class="product-list" data-category="kids">
+                <figure>
+                    <div class="folder">        
+                        <img src="image/k1-1.webp" alt="T-shirt" class="img1">
+                        <img src="image/k1.avif" alt="T-shirt" class="img2">
+                    </div>
+                    <figcaption>
+                        <div class="text-container">
+                            <h2 class="description">Jacquard-Weave Dress</h2>
+                            <h3 class="price">$25.00</h3>
+                        </div>
+                        <button class="fa-solid fa-cart-shopping add-to-cart">Add</button>
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="product-list" data-category="kids">
+                <figure>
+                    <div class="folder">        
+                        <img src="image/k2.avif" alt="T-shirt" class="img1">
+                        <img src="image/k2-2.avif" alt="T-shirt" class="img2">s
+                    </div>
+                    <figcaption>
+                        <div class="text-container">
+                            <h2 class="description">Jacquard-Weave Dress</h2>
+                            <h3 class="price">$25.00</h3>
+                        </div>
+                        <button class="fa-solid fa-cart-shopping add-to-cart">Add</button>
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="product-list" data-category="kids">
+                <figure>
+                    <div class="folder">        
+                        <img src="image/k3-3.avif" alt="T-shirt" class="img1">
+                        <img src="image/k3.avif" alt="T-shirt" class="img2">s
+                    </div>
+                    <figcaption>
+                        <div class="text-container">
+                            <h2 class="description">Rugby Shirt</h2>
+                            <h3 class="price">$25.00</h3>
+                        </div>
+                        <button class="fa-solid fa-cart-shopping add-to-cart">Add</button>
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="product-list" data-category="kids">
+                <figure>
+                    <div class="folder">        
+                        <img src="image/k4.avif" alt="T-shirt" class="img1">
+                        <img src="image/k4-4.avif" alt="T-shirt" class="img2">s
+                    </div>
+                    <figcaption>
+                        <div class="text-container">
+                            <h2 class="description">Cotton Sweater</h2>
+                            <h3 class="price">$25.00</h3>
+                        </div>
+                        <button class="fa-solid fa-cart-shopping add-to-cart">Add</button>
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="product-list" data-category="kids">
+                <figure>
+                    <div class="folder">        
+                        <img src="image/k5.avif" alt="T-shirt" class="img1">
+                        <img src="image/k5-5.avif" alt="T-shirt" class="img2">s
+                    </div>
+                    <figcaption>
+                        <div class="text-container">
+                            <h2 class="description">Jacquard-Knit Sweater</h2>
+                            <h3 class="price">$25.00</h3>
+                        </div>
+                        <button class="fa-solid fa-cart-shopping add-to-cart">Add</button>
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="product-list" data-category="kids">
+                <figure>
+                    <div class="folder">        
+                        <img src="image/k6.avif" alt="T-shirt" class="img1">
+                        <img src="image/k6-6.avif" alt="T-shirt" class="img2">s
+                    </div>
+                    <figcaption>
+                        <div class="text-container">
+                            <h2 class="description">Printed Sweatshirt</h2>
+                            <h3 class="price">$25.00</h3>
+                        </div>
+                        <button class="fa-solid fa-cart-shopping add-to-cart">Add</button>
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="product-list" data-category="kids">
+                <figure>
+                    <div class="folder">        
+                        <img src="image/k4-4.avif" alt="T-shirt" class="img1">
+                        <img src="image/k4.avif" alt="T-shirt" class="img2">s
+                    </div>
+                    <figcaption>
+                        <div class="text-container">
+                            <h2 class="description">Cotton Sweater</h2>
+                            <h3 class="price">$25.00</h3>
+                        </div>
+                        <button class="fa-solid fa-cart-shopping add-to-cart">Add</button>
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="product-list" data-category="kids">
+                <figure>
+                    <div class="folder">        
+                        <img src="image/k5-5.avif" alt="T-shirt" class="img1">
+                        <img src="image/k5.avif" alt="T-shirt" class="img2">s
+                    </div>
+                    <figcaption>
+                        <div class="text-container">
+                            <h2 class="description">Cotton Sweater</h2>
+                            <h3 class="price">$25.00</h3>
+                        </div>
+                        <button class="fa-solid fa-cart-shopping add-to-cart">Add</button>
+                    </figcaption>
+                </figure>
+            </div>
+            <div class="product-list" data-category="kids">
+                <figure>
+                    <div class="folder">        
+                        <img src="image/k1.avif" alt="T-shirt" class="img1">
+                        <img src="image/k1-1.webp" alt="T-shirt" class="img2">s
+                    </div>
+                    <figcaption>
+                        <div class="text-container">
+                            <h2 class="description">Cotton Sweater</h2>
+                            <h3 class="price">$25.00</h3>
+                        </div>
+                        <button class="fa-solid fa-cart-shopping add-to-cart">Add</button>
+                    </figcaption>
+                </figure>
+            </div>
+        </div>
+                    <!-- Pagination -->
+                    <div class="pagination" id="pagination"></div>
+    </section>
+
+<!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="contact-container">
+            <form class="contact-form">
+                <h2 class="myContact">Contact Us</h2>
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" required placeholder="Enter your Name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" required placeholder="Enter your Email">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message:</label>
+                    <textarea id="message" required placeholder="Enter a message"></textarea>
+                </div>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+<!----Basket---->
+<section id="container-basket">
+    <div class="cart-compiler">
+    <div id="cart-section" class="section">
+        <div class="cart-basket" id="cart-basket">
+            <h2 align="center">Cart</h2>
+            <div class="product-label">
+                <ul>
+                    <li><h5>Product Name</h5></li>
+                    <li><h5>Size</h5></li>
+                    <li><h5>Price</h5></li>
+                    <li><h5>Quantity</h5></li>
+                </ul>
+            </div>
+            <div id="cart-items">
+                <!-- Items here -->
+            </div>
+            <div id="final-total">
+                <h3>Total: ₱0.00</h3>
+            </div>
+        </div>
+    </div>
+    <div class="cart-summary" id="cart-summary">
+        <h3 align="center">Summary</h3>
+        <p id="cart-subtotal">Subtotal: ₱0.00</p>
+        <p id="cart-shipping">Shipping: ₱0.00</p>
+        <p>Total:<span id="cart-total"></span></p>
+    </div>
+    </div>
+</section>
+
+
+
+<!--- MIni cart-->
+<div id="mini-cart" class="mini-cart">
+    <div class="mini-cart-arrow"></div>
+    <div class="cart-basket">
+        <h2>Your Cart</h2>
+        <div id="mini-cart-items">
+            <!-- items hereee -->
+        </div>
+    </div>
+</div>
+
+<!-- Product Description Overlay -->
+<div class="product-description-overlay" id="product-description-overlay">
+    <div class="product-description-container">
+        <span class="close-btn" id="close-description">&times;</span>
+        <div class="product-description-content">
+            <img id="product-description-img" src="" alt="Product Image">
+            <div class="product-description">
+                <div><h2 id="product-description-name">Product Name</h2></div>
+                <div class="product-rating">
+                    <div class="star-rating">
+                        <span class="average-rating">4.5</span>
+                        <span class="star">★★★★</span>
+                    </div>
+                    <div class="review-count">
+                        <span>100 reviews</span>
+                    </div>
+                    <div class="sold-count">
+                        <span >200 sold</span>
+                    </div>
+                </div>   
+                <div class="price-label-container">
+                    <label class="price-label" for="price">Price:</label>
+                    <h3 id="product-description-price">₱320.00</h3>
+                </div>
+                <div class="size-label">
+                    <label for="size">Size:</label>
+                    <div class="size-options">
+                        <span class="size-option">Small</span>
+                        <span class="size-option">Medium</span>
+                        <span class="size-option">Large</span>
+                    </div>
+                </div>
+            </div>
+            <div class="product-breakdown">
+                <div class="teka">placeholder</div>
+                <div class="teka">placeholder</div>
+                <div class="teka">placeholder</div>
+                <div class="teka">placeholder</div>
+
+                <div>
+                <button class="add-to-cart-overlay" disabled>Add to Cart</button>
+                <button class="checkout-overlay">Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!---- Just a Notif---->
+<div id="cart-notification" class="cart-notification">
+    Successfully added to cart!
+</div>
+
+
+<!-- Sign In / Sign Up Overlay -->
+<div class="auth-container-overlay" id="auth-container-overlay">
+<div class="auth-container" id="auth-container">
+    <!-- Sign Up Form -->
+    <div class="auth-signup" id="auth-signup">
+      <form>
+        <h1>Create Account</h1>
+        <div class="icons">
+          <a href="#" class="icon"><i class="fab fa-facebook"></i></a>
+          <a href="#" class="icon"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="icon"><i class="fab fa-google"></i></a>
+          <a href="#" class="icon"><i class="fab fa-github"></i></a>
+        </div>
+        <span>or use email for registration</span>
+        <input type="text" placeholder="Name" />
+        <input type="email" placeholder="Email" />
+        <input type="password" placeholder="Password" />
+        <button type="submit">Sign Up</button>
+      </form>
+    </div>
+
+    <!-- Sign In Form -->
+    <div class="auth-signin" id="auth-signin">
+      <form>
+        <h1>Sign In</h1>
+        <div class="icons">
+          <a href="#" class="icon"><i class="fab fa-facebook"></i></a>
+          <a href="#" class="icon"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="icon"><i class="fab fa-google"></i></a>
+          <a href="#" class="icon"><i class="fab fa-github"></i></a>
+        </div>
+        <span>or use email and password</span>
+        <input type="email" placeholder="Email" />
+        <input type="password" placeholder="Password" />
+        <a href="#">Forgot password</a>
+        <button type="submit">Sign In</button>
+      </form>
+    </div>
+
+<!-- Toggle Container -->
+    <div class="toggle-container" id="toggle-container">
+      <div class="toggle">
+        <div class="toggle-panel toggle-left">
+          <h1>Welcome Back!</h1>
+          <p>If you already have an account</p>
+          <button id="login-btn" class="toggle-btn">Sign In</button>
+          <button id="form-exit-btn" class="form-exit-btn">Log in as guest</button>
+
+        </div>
+        <div class="toggle-panel toggle-right">
+          <h1>Join Us!</h1>
+          <p>If you don't have an account</p>
+          <button id="register-btn" class="toggle-btn">Sign Up</button>
+          <button id="form-exit-btn" class="form-exit-btn">Log in as guest</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!----Footer---->
+<footer>
+    <div class="footer">
+        <h6>Bargain Boutique</h6> 
+        <div class="customer-support">
+            <p>CUSTOMER SUPPORT</p>
+            <p>Size Guide</p>
+            <p>FAQs</p> 
+            <p>Shipping</p>
+            <p>Returns and Refunds</p>
+            <p>Terms of Service</p>
+            <p>Privacy Policy</p>
+        </div>
+        <div class="know-more">
+            <p>KNOW MORE</p>
+            <p>Find a Store</p>
+            <p>Careers</p>
+            <p>Subscribe for updates!</p>
+            <p onclick="showSection('contact')">Contact Us</p> 
+            <p><a href="mailto:bargainboutique@gmail.com">bargainboutique@gmail.com</a></p>
+            <div id="socials">
+            <p><a href="https://www.facebook.com"><i class="fa-brands fa-x-twitter"></i></a></p>
+            <p><i  class="fa-brands fa-facebook"></i></p>
+            <p><i class="fa-brands fa-instagram"></i></p>
+            <p><i class="fa-brands fa-tiktok"></i></p>
+            </div>
+        </div>
+    </div>
+    <p>Copyright © 2023 Bargain Boutique. All rights reserved.</p>
+</footer>
+
+    <script src="index.js"></script>  
+
+
+    
+</body>
+</html>
