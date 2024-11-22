@@ -208,7 +208,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const basketButton = document.getElementById('basket');
     const cartSection = document.getElementById('cart-section');
     
-    cartSection.style.display = 'none'; 
+
+    loadCartFromSessionStorage();
 
     basketButton.addEventListener('click', () => {
         toggleCart();
@@ -216,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const addToCartButtons = document.querySelectorAll('.add-to-cart');
     addToCartButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             addToCart(button);
         });
     });
@@ -229,21 +230,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    document.addEventListener('click', (event) => {
-        if (event.target.classList.contains('remove-btn')) {
-            removeFromCart(event.target);
-        } else if (event.target.classList.contains('quantity-btn')) {
-            const action = event.target.getAttribute('data-action');
-            const productName = event.target.getAttribute('data-product');
-            changeQuantity(action, productName);
-        }
-    });
-});
-
 
 function toggleCart() {
-    const cartSection = document.getElementById('cart-section');
+    const cartSection = document.getElementById('container-basket');
     
     if (cartSection.style.display === 'block') {
         cartSection.style.display = 'none';
@@ -251,140 +240,22 @@ function toggleCart() {
         cartSection.style.display = 'block';
     }
 }
-
-function addToCart(button) {
-    const productElement = button.closest('.product');
-    const productName = productElement.querySelector('.product-name').textContent;
-    const productPrice = parseFloat(productElement.querySelector('.product-price').textContent.replace('₱', ''));
-    const productSize = productElement.querySelector('.product-size').value; 
-
-    const cartItemHTML = `
-        <div class="cart-item">
-            <div class="product-name">${productName}</div>
-            <div class="product-size">${productSize}</div>
-            <div class="cart-item-price">₱${productPrice.toFixed(2)}</div>
-            <div class="quantity">
-                <button class="decrease" onclick="changeQuantity('decrease', '${productName}')">-</button>
-                <span id="quantity-${productName}" class="quantity-text">1</span>
-                <button class="increase" onclick="changeQuantity('increase', '${productName}')">+</button>
-            </div>
-            <button class="remove" onclick="removeFromCart(this)">Remove</button>
-        </div>
-    `;
-    
-    const cartItemsContainer = document.getElementById('cart-items');
-    cartItemsContainer.insertAdjacentHTML('beforeend', cartItemHTML);
-
-    updateMainCartTotal(); 
-    updateCartCounter(); 
-    updateFinalTotal();  
-}
-
-function changeQuantity(action, productName) {
-    const quantityText = document.getElementById(`quantity-${productName}`);
-    let currentQuantity = parseInt(quantityText.textContent);
-
-    if (action === 'increase') {
-        currentQuantity++;
-    } else if (action === 'decrease' && currentQuantity > 1) {
-        currentQuantity--;
-    }
-
-    quantityText.textContent = currentQuantity;
-
-    updateInlineCartTotal();  
-    updateFinalTotal(); 
-}
-
-function removeFromCart(button) {
-    const cartItem = button.closest('.cart-item');
-    const productName = cartItem.querySelector('.cart-item-name h3').textContent.trim();
-
-    if (cartItem) {
-        cartItem.remove();
-        updateCartCounter();
-        updateMainCartTotal();
-        updateFinalTotal();
-    }
-
-// remove from Mini
-    const miniCartItems = document.querySelectorAll('.mini-cart-item');
-    miniCartItems.forEach(miniCartItem => {
-        const miniProductName = miniCartItem.querySelector('.mini-cart-item-name h5').textContent.trim();
-        if (miniProductName === productName) {
-            miniCartItem.remove();
-        }
-    });
-}
-
-function updateMainCartTotal() {
-    const cartItems = document.querySelectorAll('.cart-item');
-    let total = 0;
-    const shippingCost = 50; 
-
-    cartItems.forEach(item => {
-        const price = parseFloat(item.querySelector('.cart-item-price').textContent.replace('₱', ''));
-        total += price;
-    });
-
-    const totalWithShipping = total + shippingCost;
-
-    document.getElementById('cart-subtotal').textContent = `Subtotal: ₱${total.toFixed(2)}`;
-    document.getElementById('cart-shipping').textContent = `Shipping: ₱${shippingCost.toFixed(2)}`;
-    document.getElementById('cart-total').textContent = `₱${totalWithShipping.toFixed(2)}`;
-}
-
-function updateCartCounter() {
-    const totalItems = document.querySelectorAll('.cart-item').length;
-    document.getElementById('total-items').textContent = totalItems;
-}
-
-function updateInlineCartTotal() {
-    const cartItems = document.querySelectorAll('.cart-item');
-    let total = 0;
-
-    cartItems.forEach(item => {
-        const price = parseFloat(item.querySelector('.cart-item-price').textContent.replace('₱', ''));
-        const quantity = parseInt(item.querySelector('.quantity-text').textContent);
-        total += price * quantity;
-
-        document.getElementById('cart-subtotal').textContent = `Subtotal: ₱${total.toFixed(2)}`;
-    });
-}
-
-function updateFinalTotal() {
-    const cartItems = document.querySelectorAll('.cart-item');
-    let total = 0;
-    const shippingCost = 50; 
-    cartItems.forEach(item => {
-        const price = parseFloat(item.querySelector('.cart-item-price').textContent.replace('₱', ''));
-        const quantity = parseInt(item.querySelector('.quantity-text').textContent);
-        total += price * quantity;
-    });
-
-    const finalTotal = total + shippingCost;
-
-    document.getElementById('cart-total').textContent = `₱${finalTotal.toFixed(2)}`;
-}
-
-// Counter
-let cartItemCount = 0;
-function updateCartCounter() {
-    const cartCounter = document.getElementById('cart-counter');
-    const itemCount = document.querySelectorAll('.cart-item').length;
-    cartCounter.textContent = itemCount; 
-}
-
-// Product Description
 document.addEventListener('DOMContentLoaded', () => {
     const sizeOptions = document.querySelectorAll('.size-option');
     const addToCartButton = document.querySelector('.add-to-cart-overlay'); 
     const closeButton = document.getElementById('close-description');
     const overlay = document.getElementById('product-description-overlay');
-    const cartItems = document.getElementById('cart-items');
+    const cartItemsContainer = document.getElementById('cart-items');
     const miniCartItems = document.getElementById('mini-cart-items');
+    const cartCounter = document.getElementById('cart-counter');
     let sizeSelected = false; 
     let selectedSize = ''; 
+
+    addToCartButton.disabled = true;
+
+
+
+    loadCartFromSessionStorage();
 
     const productElements = document.querySelectorAll('.product-list');
     productElements.forEach(product => {
@@ -421,63 +292,166 @@ document.addEventListener('DOMContentLoaded', () => {
 
     addToCartButton.addEventListener('click', () => {
         if (sizeSelected) {
-            addToCartOverlay();
-            displayMessage("Successfully added to cart");
-            resetOverlay();
+            if (localStorage.getItem('signedIn') !== 'true') {
+                showAuthContainer();
+            } else {
+                const productImage = document.getElementById('product-description-img').src;
+                const productName = document.getElementById('product-description-name').textContent;
+                const productPrice = parseFloat(document.getElementById('product-description-price').textContent.replace('₱', ''));
+
+                const cartItem = {
+                    image: productImage,
+                    name: productName,
+                    size: selectedSize,
+                    price: productPrice,
+                    quantity: 1,
+                };
+
+                addItemToCart(cartItem);
+                displayMessage("Successfully added to cart");
+                resetOverlay();
+            }
         } else {
             displayMessage("Please select a size before adding to the cart");
         }
     });
 
-    function addToCartOverlay() {
-        const productImage = document.getElementById('product-description-img').src;
-        const productName = document.getElementById('product-description-name').textContent;
-        const productPrice = document.getElementById('product-description-price').textContent;
+    function addItemToCart(item) {
+        const cart = getCartFromSessionStorage();
+        const existingItemIndex = cart.findIndex(cartItem => cartItem.name === item.name && cartItem.size === item.size);
 
-        const cartItem = document.createElement('div');
-        cartItem.classList.add('cart-item');
-        cartItem.innerHTML = `
-            <div class="cart-item-image">
-                <img src="${productImage}" alt="${productName}" class="cart-item-image">
-            </div>
-            <div class="cart-item-name">
-                <h3>${productName}</h3>
-            </div>
-            <div class="cart-item-size">
-                <p>${selectedSize}</p>
-            </div>
-            <div class="cart-item-price">
-                <p>₱${parseFloat(productPrice.replace('₱', '')).toFixed(2)}</p>
-            </div>
-            <div class="cart-item-quantity">
-                <button class="quantity-btn decrease-btn" onclick="changeQuantity('decrease', '${productName}')">-</button>
-                <span id="quantity-${productName}" class="quantity-text">1</span>
-                <button class="quantity-btn increase-btn" onclick="changeQuantity('increase', '${productName}')">+</button>
-            </div>
-            <div class="cart-item-actions">
-                <button class="remove-btn" data-product="${productName}">Remove</button>
-            </div>
-        `;
-        document.getElementById('cart-items').appendChild(cartItem);
-        updateCartCounter();
-        updateMainCartTotal();
+        if (existingItemIndex !== -1) {
+            cart[existingItemIndex].quantity += 1;
+        } else {
+            cart.push(item);
+        }
 
-        const miniCartItem = document.createElement('div');
-        miniCartItem.classList.add('mini-cart-item');
-        miniCartItem.innerHTML = `
-            <div class="mini-cart-item-image">
-                <img src="${productImage}" alt="${productName}" class="mini-cart-item-image">
-            </div>
-            <div class="mini-cart-item-name">
-                <h5>${productName}</h5>
-            </div>
-            <div class="mini-cart-item-price">
-                <h5>₱${parseFloat(productPrice.replace('₱', '')).toFixed(2)}</h5>
-            </div>
-        `;
-        miniCartItems.appendChild(miniCartItem);
-        updateInlineCartTotal();
+
+        saveCartToSessionStorage(cart);
+        renderCart();
     }
+
+    function removeItemFromCart(name, size) {
+        let cart = getCartFromSessionStorage();
+        cart = cart.filter(item => !(item.name === name && item.size === size));
+        saveCartToSessionStorage(cart);
+        renderCart();
+    }
+
+    function changeItemQuantity(name, size, action) {
+        const cart = getCartFromSessionStorage();
+        const itemIndex = cart.findIndex(item => item.name === name && item.size === size);
+
+        if (itemIndex !== -1) {
+            if (action === 'increase') {
+                cart[itemIndex].quantity += 1;
+            } else if (action === 'decrease' && cart[itemIndex].quantity > 1) {
+                cart[itemIndex].quantity -= 1;
+            }
+        }
+
+        saveCartToSessionStorage(cart);
+        renderCart();
+    }
+
+    function renderCart() {
+        const cart = getCartFromSessionStorage();
+    
+        cartItemsContainer.innerHTML = '';
+        miniCartItems.innerHTML = '';
+    
+        cart.forEach(item => {
+            const cartItemHTML = `
+                <div class="cart-item" data-name="${item.name}" data-size="${item.size}">
+                    <div class="cart-item-image">
+                        <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                    </div>
+                    <div class="cart-item-name">
+                        <h3>${item.name}</h3>
+                    </div>
+                    <div class="cart-item-size">
+                        <p>${item.size}</p>
+                    </div>
+                    <div class="cart-item-price">
+                        <p>₱${item.price.toFixed(2)}</p>
+                    </div>
+                    <div class="cart-item-quantity">
+                        <button class="quantity-btn decrease-btn" data-action="decrease">-</button>
+                        <span class="quantity-text">${item.quantity}</span>
+                        <button class="quantity-btn increase-btn" data-action="increase">+</button>
+                    </div>
+                    <div class="cart-item-actions">
+                        <button class="remove-btn" data-action="remove">Remove</button>
+                    </div>
+                </div>
+            `;
+            cartItemsContainer.insertAdjacentHTML('beforeend', cartItemHTML);
+    
+            const miniCartItemHTML = `
+                <div class="mini-cart-item">
+                    <div class="mini-cart-item-image">
+                        <img src="${item.image}" alt="${item.name}" class="mini-cart-item-image">
+                    </div>
+                    <div class="mini-cart-item-name">
+                        <h5>${item.name}</h5>
+                    </div>
+                    <div class="mini-cart-item-price">
+                        <h5>₱${item.price.toFixed(2)}</h5>
+                    </div>
+                </div>
+            `;
+            miniCartItems.insertAdjacentHTML('beforeend', miniCartItemHTML);
+        });
+        
+        updateCartCounter(cart); 
+        updateCartSummary(cart);
+    }
+
+    cartItemsContainer.addEventListener('click', (event) => {
+        const target = event.target;
+        const action = target.dataset.action;
+        if (!action) return; 
+    
+        const cartItemElement = target.closest('.cart-item');
+        const name = cartItemElement.getAttribute('data-name');
+        const size = cartItemElement.getAttribute('data-size');
+    
+        if (action === 'remove') {
+            removeItemFromCart(name, size);
+        } else if (action === 'increase') {
+            changeItemQuantity(name, size, 'increase');
+        } else if (action === 'decrease') {
+            changeItemQuantity(name, size, 'decrease');
+        }
+    });
+    
+    function updateCartSummary(cart) {
+        const subtotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+        const shipping = 55;
+        const total = subtotal + shipping;
+
+        document.getElementById('cart-subtotal').textContent = `Subtotal: ₱${subtotal.toFixed(2)}`;
+        document.getElementById('cart-shipping').textContent = `Shipping: ₱${shipping.toFixed(2)}`;
+        document.getElementById('cart-total').textContent = `₱${total.toFixed(2)}`;
+    }
+
+    function updateCartCounter(cart) {
+        const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+        cartCounter.textContent = totalItems; 
+    }
+    function saveCartToSessionStorage(cart) {
+        sessionStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    function getCartFromSessionStorage() {
+        const cart = sessionStorage.getItem('cart');
+        return cart ? JSON.parse(cart) : [];
+    }
+
+    function loadCartFromSessionStorage() {
+        renderCart();
+    }
+
     function displayMessage(message) {
         const messageElement = document.getElementById('cart-notification');
         messageElement.textContent = message;
@@ -488,6 +462,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 2000);
     }
 
+    function showAuthContainer() {
+        showSection('home');
+        resetOverlay();
+        const authContainer = document.getElementById('auth-container');
+        const overlay = document.getElementById('auth-container-overlay');
+        overlay.style.visibility = 'visible';
+        overlay.style.opacity = '1';
+        authContainer.style.visibility = 'visible';
+        authContainer.style.opacity = '1';
+    }
+
     function resetOverlay() {
         sizeOptions.forEach(opt => opt.classList.remove('selected'));
         selectedSize = '';
@@ -496,6 +481,7 @@ document.addEventListener('DOMContentLoaded', () => {
         overlay.style.display = 'none';  
     }
 });
+
 
 
 
@@ -559,6 +545,20 @@ sizeOptions.forEach(option => {
 
 
 //Log in
+
+function showProfile() {
+    const logoutForm = document.getElementById('logOut');
+    logoutForm.style.visibility = 'visible';
+    logoutForm.style.opacity = '1';
+}
+function hideProfile(){
+    const logoutForm = document.getElementById('logOut');
+    logoutForm.style.visibility = 'hidden';
+    logoutForm.style.opacity = '0';
+}
+
+
+
 window.addEventListener('DOMContentLoaded', () => {
     const authContainer = document.getElementById('auth-container');
     const overlay = document.getElementById('auth-container-overlay');
@@ -568,8 +568,9 @@ window.addEventListener('DOMContentLoaded', () => {
     const formExitBtns = document.querySelectorAll('.form-exit-btn'); 
     const signUpForm = document.getElementById('auth-signup'); 
     const signInForm = document.getElementById('auth-signin');
+    const logoutBtn = document.getElementById('logout-btn');
 
-    if (!sessionStorage.getItem('formClosed') && sessionStorage.getItem('signedIn') !== 'true') {
+    if (!localStorage.getItem('formClosed') && localStorage.getItem('signedIn') !== 'true') {
         setTimeout(() => {
             showAuthContainer();
         }, 2000);
@@ -578,8 +579,8 @@ window.addEventListener('DOMContentLoaded', () => {
     formExitBtns.forEach(button => {
         button.addEventListener('click', () => {
             hideAuthContainer();
-            sessionStorage.setItem('formClosed', 'true');
-            sessionStorage.setItem('signedIn', 'false');
+            localStorage.setItem('formClosed', 'true');
+            localStorage.setItem('signedIn', 'false');
         });
     });
 
@@ -594,47 +595,76 @@ window.addEventListener('DOMContentLoaded', () => {
     const signUpSubmitBtn = signUpForm.querySelector('button[type="submit"]');
     signUpSubmitBtn.addEventListener('click', (e) => {
         e.preventDefault(); 
-
+    
+        const userName = document.getElementById('userName');
         const emailInput = signUpForm.querySelector('input[type="email"]');
         const passwordInput = signUpForm.querySelector('input[type="password"]');
-
+    
         const enteredEmail = emailInput.value;
         const enteredPassword = passwordInput.value;
-
-        sessionStorage.setItem('signUpEmail', enteredEmail);
-        sessionStorage.setItem('signUpPassword', enteredPassword);
-
-        sessionStorage.setItem('signedUp', 'true');
-
+    
+        localStorage.setItem('signUpEmail', enteredEmail);
+        localStorage.setItem('signUpPassword', enteredPassword);
+        localStorage.setItem('signedUp', 'true');
+    
+        userName.value = '';
+        emailInput.value = '';
+        passwordInput.value = '';
+    
         authContainer.classList.remove('active');
     });
+    
 
     const emailInput = signInForm.querySelector('input[type="email"]');
     const passwordInput = signInForm.querySelector('input[type="password"]');
     const signInSubmitBtn = signInForm.querySelector('button[type="submit"]');
-
+    
     signInSubmitBtn.addEventListener('click', (e) => {
-        e.preventDefault(); 
-
-        const validEmail = sessionStorage.getItem('signUpEmail');
-        const validPassword = sessionStorage.getItem('signUpPassword');
-
+        e.preventDefault();
+    
+        const validEmail = localStorage.getItem('signUpEmail');
+        const validPassword = localStorage.getItem('signUpPassword');
+    
         const enteredEmail = emailInput.value;
         const enteredPassword = passwordInput.value;
-
+    
         if (enteredEmail === validEmail && enteredPassword === validPassword) {
-            sessionStorage.setItem('signedIn', 'true');
+            localStorage.setItem('signedIn', 'true');
             userProfileBtn.style.color = 'white'; 
             hideAuthContainer();
+                
+            emailInput.value = '';
+            passwordInput.value = '';
         } else {
             alert('Invalid credentials. Please try again.');
         }
     });
+    
 
     userProfileBtn.addEventListener('click', () => {
-        if (sessionStorage.getItem('signedIn') === 'false' || !sessionStorage.getItem('signedIn')) {
+        if (localStorage.getItem('signedIn') === 'false' || !localStorage.getItem('signedIn')) {
             showAuthContainer();
+
+        } else if (localStorage.getItem('signedIn') === 'true') {
+            showProfile();
         }
+    });
+    
+
+    logoutBtn.addEventListener('click', () => {
+        localStorage.setItem('signedIn', 'false');
+        localStorage.setItem('signedUp', 'false');
+        localStorage.removeItem('signUpEmail');
+        localStorage.removeItem('signUpPassword');
+        localStorage.removeItem('formClosed');
+        userProfileBtn.style.color = ''; 
+
+        setTimeout(() => {
+            showAuthContainer();
+        }, 2000);
+
+        hideProfile();
+
     });
 
     function showAuthContainer() {
@@ -643,6 +673,7 @@ window.addEventListener('DOMContentLoaded', () => {
         authContainer.style.visibility = 'visible';
         authContainer.style.opacity = '1';
     }
+    
 
     function hideAuthContainer() {
         overlay.style.visibility = 'hidden';
@@ -651,4 +682,6 @@ window.addEventListener('DOMContentLoaded', () => {
         authContainer.style.opacity = '0';
     }
 });
+
+
 
