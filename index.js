@@ -308,7 +308,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 };
 
                 addItemToCart(cartItem);
-                displayMessage("Successfully added to cart");
+                displayMessage();
                 resetOverlay();
             }
         } else {
@@ -452,9 +452,8 @@ document.addEventListener('DOMContentLoaded', () => {
         renderCart();
     }
 
-    function displayMessage(message) {
+    function displayMessage() {
         const messageElement = document.getElementById('cart-notification');
-        messageElement.textContent = message;
         messageElement.style.display = 'block'; 
 
         setTimeout(() => {
@@ -557,8 +556,14 @@ function hideProfile(){
     logoutForm.style.opacity = '0';
 }
 
+function signedUpMessage() {
+    const signedUpMessage = document.getElementById('signUp-notification');
+    signedUpMessage.style.display = 'block'; 
 
-
+    setTimeout(() => {
+        signedUpMessage.style.display = 'none'; 
+    }, 2000);
+}
 window.addEventListener('DOMContentLoaded', () => {
     const authContainer = document.getElementById('auth-container');
     const overlay = document.getElementById('auth-container-overlay');
@@ -610,8 +615,10 @@ window.addEventListener('DOMContentLoaded', () => {
         userName.value = '';
         emailInput.value = '';
         passwordInput.value = '';
-    
+        
         authContainer.classList.remove('active');
+        signedUpMessage();
+        
     });
     
 
@@ -646,7 +653,13 @@ window.addEventListener('DOMContentLoaded', () => {
             showAuthContainer();
 
         } else if (localStorage.getItem('signedIn') === 'true') {
-            showProfile();
+            const logoutForm = document.getElementById('logOut');
+
+            if (logoutForm.style.visibility === 'visible') { 
+                hideProfile();
+            } else {
+                showProfile();
+            }
         }
     });
     

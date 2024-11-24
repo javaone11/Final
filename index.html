@@ -40,7 +40,7 @@
                 <button class="basket-icon" id="basket" onclick="showSection('container-basket')">
                     <i class="fa-solid fa-bag-shopping"></i>
                     <span id="cart-counter" class="cart-counter">0</span> </button>
-                    <button id="userProfile" class="userProfile" style="background-color: transparent; border: none; font-size: 2rem;"><i class="fa-solid fa-user"></i></button>     
+                    <button id="userProfile" class="userProfile" style="background-color: transparent; border: none; font-size: 2rem;"><i class="fa-regular fa-user"></i></button>     
             </div>
         </nav>
     </header>
@@ -48,7 +48,10 @@
     <!-- Home Section -->
     <section id="home" class="section active">
         <img id="slide1" src="image/over-the-horizon1_1944x.webp" alt="Thrift Store Background">
+        <div class="home-products-container">
+                <span id="mySpan">Start Shopping</span>
         <div class="home-products">
+ 
             <div class="product-list" data-category="men-clothing">
                 <figure>
                     <div class="folder">
@@ -202,6 +205,7 @@
                 </figure>
             </div>
             </div> 
+        </div>
 
         <div class="text" >
             <h2>THE BEST IS YET TO COME</h2>
@@ -1057,6 +1061,8 @@
                         <span class="size-option">Small</span>
                         <span class="size-option">Medium</span>
                         <span class="size-option">Large</span>
+                        <span class="size-option">X-Large</span>
+                        <span class="size-option">XX-Large</span>
                     </div>
                 </div>
                 <div  class="product-breakdown">
@@ -1064,17 +1070,67 @@
                     <button class="checkout-overlay">Checkout</button>
                 </div>
             </div>
-            <div class="breakdown">
-               
+
+            <div class="comment-section">
+                <div id="user1" class="userAccount">
+                    <div class="userReviews" >
+                    <span><i class="fa-solid fa-user" style="color: #143aa1;"></i></span>
+                    <div id="user-Names">
+                        <p>User1</p>
+                        <div class="comment-rating">
+                            <span>5</span>
+                            <span class="comment-star">★★★★★</span>
+                        </div>
+                    </div>
+                    </div>
+                    <p class="usersComment">Ang cute ng damit na ‘to, To the point na kahit yung aso ko napa- "aww".</p>
+                </div>
+                <div id="user2" class="userAccount">
+                    <div class="userReviews">
+                    <span><i class="fa-solid fa-user" style="color: #ec72dc;"></i></span>
+                    <div id="user-Names">
+                        <p>User2</p>
+                        <div class="comment-rating">
+                            <span>5</span>
+                            <span class="comment-star">★★★★★</span>
+                        </div>
+                    </div>
+                    </div>
+                        <p class="usersComment">Wearing this shirt feels like I’m the main character in a rom-com, ang daming humahanga kahit walang script!</p>
+                </div>
+                <div  class="userAccount">
+                    <div class="userReviews">
+                        <span><i class="fa-solid fa-user" style="color: #50e758;"></i></span>
+                        <div id="user-Names">
+                            <p>User3</p>
+                            <div class="comment-rating">
+                                <span>5</span>
+                                <span class="comment-star">★★★★★</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="usersComment">may sariling fan club 'tong dress na to—lahat ng mata, nandiyan!</p>
+                </div>
+                <div id="yourUser">
+                    <i class="fa-regular fa-user" style="color: #FFD43B;"></i>
+                    <textarea id="review" required placeholder="Give the product a Review"></textarea>
+                </div>
+                </div>
             </div>
-        </div>
+        </div>  
     </div>
 </div>
 
 <!---- Just a Notif---->
-<div id="cart-notification" class="cart-notification">
-    Successfully added to cart!
-</div>
+<section id="cart-notification" class="cart-notification">
+    <div><i class="fa-solid fa-check"></i></div>
+    <div>Successfully added to cart!<div>
+</section>
+
+<section id="signUp-notification" class="signUp-notification">
+    <div><i class="fa-solid fa-check"></i></div>
+    <div>Successfully Signed up an Account!<div>
+</section>
 
 
 <!-- Sign In / Sign Up Overlay -->
@@ -1117,7 +1173,7 @@
     </div>
 
 <!-- Toggle Container -->
-    <div class="toggle-container" id="toggle-container">
+    <div class="toggle-container" id="toggle-container" >
       <div class="toggle">
         <div class="toggle-panel toggle-left">
           <h1>Welcome Back!</h1>
@@ -1140,8 +1196,12 @@
 
 <!----Log out ---->
 <div id="logOut" class="logout-form" >
-    <button id="logout-btn">Log Out</button>
-
+    <div class="myuserProfile">
+        <div id="user-arrowhead"></div>
+        <div class="add-user">My Account</div> 
+        <div class="add-user">Settings</div>
+        <button id="logout-btn">Log Out</button>
+    </div>
 </div>
 
 <!----Footer---->
@@ -1172,7 +1232,7 @@
             </div>
         </div>
     </div>
-    <p>Copyright © 2023 Bargain Boutique. All rights reserved.</p>
+    <h4>Copyright © 2023 Bargain Boutique. All rights reserved.</h4>
 </footer>
 
     <script src="index.js"></script>  
