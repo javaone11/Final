@@ -1157,6 +1157,9 @@ body{
         height: 50px;
         gap: 20px;
     }
+    #cart-notification{
+        padding: 30px !important;
+    }
 
 }
 /*Product list */ 
