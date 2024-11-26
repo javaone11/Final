@@ -461,6 +461,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 2000);
     }
 
+    function displayCheckout(){
+        const messageCheckout = document.getElementById('checkout-notification');
+        messageCheckout.style.display = 'block'; 
+
+        setTimeout(() => {
+            messageCheckout.style.display = 'none'; 
+        }, 3000);
+
+    }
     function showAuthContainer() {
         showSection('home');
         resetOverlay();
@@ -479,7 +488,25 @@ document.addEventListener('DOMContentLoaded', () => {
         addToCartButton.disabled = true;
         overlay.style.display = 'none';  
     }
+    function clearCartItems() {
+        const cart = getCartFromSessionStorage();
+        if (cart.length > 0) {
+
+            saveCartToSessionStorage([]);
+            renderCart(); 
+
+            displayCheckout("Cart has been cleared!");
+        } 
+    }
+
+    
+    const checkoutButton = document.getElementById('checkout-button'); 
+    if (checkoutButton) {
+        checkoutButton.addEventListener('click', clearCartItems);
+    }
+    
 });
+
 
 
 
@@ -494,11 +521,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     basketButton.addEventListener('mouseleave', () => {
-        setTimeout(() => {
-            if (!miniCart.matches(':hover')) {  
-                miniCart.style.display = 'none';  
-            }
-        }, 300);
+        miniCart.style.display = 'none';  
     });
 });
 
@@ -540,7 +563,6 @@ sizeOptions.forEach(option => {
         }
     });
 });
-
 
 
 //Log in
@@ -664,21 +686,26 @@ window.addEventListener('DOMContentLoaded', () => {
     });
     
 
-    logoutBtn.addEventListener('click', () => {
-        localStorage.setItem('signedIn', 'false');
-        localStorage.setItem('signedUp', 'false');
-        localStorage.removeItem('signUpEmail');
-        localStorage.removeItem('signUpPassword');
-        localStorage.removeItem('formClosed');
-        userProfileBtn.style.color = ''; 
+logoutBtn.addEventListener('click', () => {
 
-        setTimeout(() => {
-            showAuthContainer();
-        }, 2000);
+    // Log out the user by updating the local storage
+    localStorage.setItem('signedIn', 'false');
+    localStorage.setItem('signedUp', 'false');
+    localStorage.removeItem('signUpEmail');
+    localStorage.removeItem('signUpPassword');
+    localStorage.removeItem('formClosed');
 
-        hideProfile();
+    userProfileBtn.style.color = ''; 
 
-    });
+    hideProfile();
+
+    location.reload(); 
+
+    setTimeout(() => {
+        showAuthContainer(); 
+    }, 2000);
+});
+    
 
     function showAuthContainer() {
         overlay.style.visibility = 'visible';

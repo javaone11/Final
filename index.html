@@ -1016,6 +1016,7 @@
         <div class="total-border">
         <p>Total:<span id="cart-total"></span></p>
         </div>
+        <button id="checkout-button" onclick="clearCartItems()">Checkout</button>
     </div>
     </div>
 </section>
@@ -1069,7 +1070,6 @@
                 </div>
                 <div  class="product-breakdown">
                     <button class="add-to-cart-overlay" disabled>Add to Cart</button>
-                    <button class="checkout-overlay">Checkout</button>
                 </div>
             </div>
 
@@ -1114,7 +1114,7 @@
                     <p class="usersComment">may sariling fan club 'tong dress na to—lahat ng mata, nandiyan!</p>
                 </div>
                 <div id="yourUser">
-                    <i class="fa-regular fa-user" style="color: #FFD43B;"></i>
+                    <i class="fa-regular fa-user" style="color: hwb(0 0% 100%); "></i>
                     <textarea id="review" required placeholder="Give the product a Review"></textarea>
                 </div>
                 </div>
@@ -1132,6 +1132,15 @@
 <section id="signUp-notification" class="signUp-notification">
     <div><i class="fa-solid fa-check"></i></div>
     <div>Successfully Signed up an Account!<div>
+</section>
+
+<!---- Just a Notif---->
+<section id="checkout-notification" class="cart-notification">
+    <div><i class="fa-solid fa-check"></i></div>
+    <div>Checkout successful!<div>
+        <div class="truck-container">
+            <i class="fa-solid fa-truck"></i>
+        </div>
 </section>
 
 
